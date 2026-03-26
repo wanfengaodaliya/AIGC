@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>像素编码勇者 - AI对话</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        .message {
+            max-width: 80%;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 18px;
+        }
+        .user-message {
+            background-color: #DCF8C6;
+            color: #000;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .ai-message {
+            background-color: #F1F0F0;
+            color: #000;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- 顶部导航 -->
+    <div class="bg-blue-600 text-white p-4 flex items-center justify-between">
+        <h1 class="text-xl font-bold">AI精灵</h1>
+        <button id="closeBtn" class="bg-white/20 hover:bg-white/30 p-2 rounded-full">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    
+    <!-- 对话区域 -->
+    <div id="chatContainer" class="flex-1 p-4 overflow-y-auto flex flex-col">
+        <!-- AI欢迎消息 -->
+        <div class="message ai-message">
+            <p>你好，勇者！我是你的AI精灵，有什么可以帮助你的吗？</p>
+        </div>
+        <div class="message ai-message">
+            <p>你可以问我关于Python编程的问题，或者游戏中的任何疑问。</p>
+        </div>
+    </div>
+    
+    <!-- 输入区域 -->
+    <div class="bg-white p-4 border-t border-gray-200">
+        <div class="flex items-center gap-2">
+            <input type="text" id="messageInput" placeholder="输入你的问题..." class="flex-1 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="sendBtn" class="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg">
+                <i class="fa fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // 关闭按钮
+        document.getElementById('closeBtn').addEventListener('click', () => {
+            // 返回上一页
+            window.history.back();
+        });
+        
+        // 发送按钮
+        document.getElementById('sendBtn').addEventListener('click', sendMessage);
+        
+        // 输入框回车发送
+        document.getElementById('messageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            // 添加用户消息
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // 模拟AI回复
+            setTimeout(() => {
+                let reply;
+                
+                // 简单的回复逻辑
+                if (message.includes('print')) {
+                    reply = 'print() 函数用于输出信息到控制台。例如：print("攻击") 会输出 "攻击"。';
+                } else if (message.includes('if')) {
+                    reply = 'if 语句用于条件判断。例如：if 条件: 执行代码。';
+                } else if (message.includes('for')) {
+                    reply = 'for 循环用于重复执行代码。例如：for i in range(5): 执行代码。';
+                } else if (message.includes('函数')) {
+                    reply = '函数是一段可重复使用的代码。例如：def 函数名(): 执行代码。';
+                } else if (message.includes('列表')) {
+                    reply = '列表用于存储多个值。例如：list = [1, 2, 3]。';
+                } else if (message.includes('帮助')) {
+                    reply = '我可以帮助你解决Python编程问题，比如语法、函数使用等。你可以具体问我某个知识点。';
+                } else {
+                    reply = '我理解你的问题，但是我还在学习中。你可以尝试问我关于Python编程的具体问题。';
+                }
+                
+                addMessage(reply, 'ai');
+            }, 1000);
+        }
+        
+        function addMessage(text, sender) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'ai-message');
+            messageDiv.innerHTML = `<p>${text}</p>`;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>像素编码勇者 - 战斗界面</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .hero-bounce {
+            animation: bounce 2s infinite;
+        }
+        .dragon-bounce {
+            animation: bounce 2.5s infinite;
+        }
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        .flash {
+            animation: flash 0.5s ease-in-out;
+        }
+        .health-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        .code-editor {
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-red-900 to-black min-h-screen">
+    <!-- 战斗区 -->
+    <div class="relative p-4">
+        <!-- 关卡信息 -->
+        <div class="text-white text-center mb-4">
+            <h2 class="text-xl font-bold">关卡 <span id="levelNumber">1</span></h2>
+            <p class="text-sm text-white/70" id="levelHint">基础语法：使用 print() 函数输出攻击指令</p>
+        </div>
+        
+        <!-- 血量条 -->
+        <div class="flex justify-between items-center mb-6">
+            <!-- 勇者血量 -->
+            <div class="flex flex-col items-center">
+                <div class="flex items-center gap-2 mb-1">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pixel%20style%20warrior%20icon%2C%208-bit%20graphics%2C%20vibrant%20colors&image_size=square" alt="勇者" class="w-6 h-6">
+                    <span class="text-white font-medium" id="heroName">冒险者</span>
+                </div>
+                <div class="w-40 h-4 bg-gray-700 rounded-full overflow-hidden">
+                    <div class="health-bar bg-green-500 h-full rounded-full" id="heroHealth" style="width: 100%"></div>
+                </div>
+            </div>
+            
+            <!-- 魔龙血量 -->
+            <div class="flex flex-col items-center">
+                <div class="flex items-center gap-2 mb-1">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pixel%20style%20dragon%20icon%2C%208-bit%20graphics%2C%20vibrant%20colors&image_size=square" alt="魔龙" class="w-6 h-6">
+                    <span class="text-white font-medium">魔龙</span>
+                </div>
+                <div class="w-40 h-4 bg-gray-700 rounded-full overflow-hidden">
+                    <div class="health-bar bg-red-500 h-full rounded-full" id="dragonHealth" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 战斗场景 -->
+        <div class="flex justify-between items-end mb-8">
+            <!-- 勇者 -->
+            <div class="flex flex-col items-center">
+                <div class="w-24 h-24 bg-white/10 rounded-full flex items-center justify-center">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pixel%20style%20warrior%20with%20sword%2C%208-bit%20graphics%2C%20vibrant%20colors&image_size=square" alt="勇者" class="w-20 h-20 object-contain hero-bounce" id="heroImage">
+                </div>
+            </div>
+            
+            <!-- 魔龙 -->
+            <div class="flex flex-col items-center">
+                <div class="w-32 h-32 bg-white/10 rounded-full flex items-center justify-center">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pixel%20style%20dragon%20flying%2C%208-bit%20graphics%2C%20vibrant%20colors&image_size=square" alt="魔龙" class="w-28 h-28 object-contain dragon-bounce" id="dragonImage">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 代码区 -->
+    <div class="bg-gray-800 rounded-t-lg p-4">
+        <div class="flex justify-between items-center mb-3">
+            <h3 class="text-white font-medium">代码输入</h3>
+            <div class="text-xs text-white/70">Python</div>
+        </div>
+        <textarea id="codeInput" class="code-editor w-full bg-gray-900 text-green-400 p-3 rounded-lg h-32 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="输入Python代码攻击魔龙...
+例如：
+print('攻击')
+"></textarea>
+        
+        <!-- 语法提示 -->
+        <div class="mt-3 p-3 bg-gray-900 rounded-lg">
+            <h4 class="text-white text-sm font-medium mb-1">当前关卡知识点</h4>
+            <p class="text-blue-400 text-xs" id="codeHint">使用 print() 函数输出攻击指令，每次攻击会消耗魔力值</p>
+        </div>
+    </div>
+    
+    <!-- 操作区 -->
+    <div class="bg-gray-800 p-4 flex justify-between items-center">
+        <button id="aiHelpBtn" class="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg">
+            <i class="fa fa-robot"></i>
+        </button>
+        
+        <button id="attackBtn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+            攻击
+        </button>
+        
+        <button id="exitBtn" class="bg-gray-500 hover:bg-gray-600 text-white p-3 rounded-full shadow-lg">
+            <i class="fa fa-sign-out"></i>
+        </button>
+    </div>
+    
+    <script>
+        // 加载关卡信息
+        const currentLevel = localStorage.getItem('currentLevel') || 1;
+        document.getElementById('levelNumber').textContent = currentLevel;
+        
+        // 加载角色信息
+        const heroName = localStorage.getItem('heroNickname') || '冒险者';
+        const heroType = localStorage.getItem('heroType') || '战士';
+        document.getElementById('heroName').textContent = heroName;
+        
+        // 更新勇者图片
+        if (heroType === '法师') {
+            document.getElementById('heroImage').src = 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pixel%20style%20mage%20with%20staff%2C%208-bit%20graphics%2C%20vibrant%20colors&image_size=square';
+        }
+        
+        // 关卡提示
+        const levelHints = {
+            1: '基础语法：使用 print() 函数输出攻击指令',
+            2: '条件语句：使用 if-else 判断攻击时机',
+            3: '循环结构：使用 for 或 while 进行连续攻击',
+            4: '函数定义：创建攻击函数提高效率',
+            5: '列表操作：使用列表存储攻击技能',
+            6: '综合挑战：运用所有知识击败最终Boss'
+        };
+        
+        const codeHints = {
+            1: '使用 print() 函数输出攻击指令，每次攻击会消耗魔力值',
+            2: '使用 if-else 语句判断魔龙状态，选择合适的攻击时机',
+            3: '使用 for 循环进行连续攻击，注意控制攻击次数',
+            4: '定义攻击函数，提高代码复用性和可读性',
+            5: '使用列表存储不同的攻击技能，随机选择使用',
+            6: '综合运用所有知识，制定最佳攻击策略'
+        };
+        
+        document.getElementById('levelHint').textContent = levelHints[currentLevel];
+        document.getElementById('codeHint').textContent = codeHints[currentLevel];
+        
+        // 战斗逻辑
+        let heroHealth = 100;
+        let dragonHealth = 100;
+        
+        document.getElementById('attackBtn').addEventListener('click', () => {
+            const code = document.getElementById('codeInput').value;
+            
+            if (code.trim() === '') {
+                alert('请输入攻击代码');
+                return;
+            }
+            
+            // 模拟代码执行
+            try {
+                // 简单的代码验证
+                if (code.includes('print')) {
+                    // 攻击成功
+                    const damage = Math.floor(Math.random() * 20) + 10;
+                    dragonHealth = Math.max(0, dragonHealth - damage);
+                    document.getElementById('dragonHealth').style.width = dragonHealth + '%';
+                    
+                    // 攻击特效
+                    document.getElementById('dragonImage').classList.add('shake');
+                    setTimeout(() => {
+                        document.getElementById('dragonImage').classList.remove('shake');
+                    }, 500);
+                    
+                    // 魔龙反击
+                    if (dragonHealth > 0) {
+                        const dragonDamage = Math.floor(Math.random() * 15) + 5;
+                        heroHealth = Math.max(0, heroHealth - dragonDamage);
+                        document.getElementById('heroHealth').style.width = heroHealth + '%';
+                        
+                        // 反击特效
+                        document.getElementById('heroImage').classList.add('shake');
+                        setTimeout(() => {
+                            document.getElementById('heroImage').classList.remove('shake');
+                        }, 500);
+                    }
+                    
+                    // 检查游戏结束
+                    if (dragonHealth <= 0) {
+                        // 通关
+                        localStorage.setItem('completedLevel', currentLevel);
+                        window.location.href = 'victory.html';
+                    } else if (heroHealth <= 0) {
+                        // 失败
+                        alert('勇者阵亡！请重新挑战');
+                        window.location.href = 'levels.html';
+                    }
+                } else {
+                    alert('代码有误，请使用 print() 函数');
+                }
+            } catch (error) {
+                alert('代码执行错误：' + error.message);
+            }
+        });
+        
+        // AI求助
+        document.getElementById('aiHelpBtn').addEventListener('click', () => {
+            window.location.href = 'ai-chat.html';
+        });
+        
+        // 退出关卡
+        document.getElementById('exitBtn').addEventListener('click', () => {
+            if (confirm('确定要退出关卡吗？')) {
+                window.location.href = 'levels.html';
+            }
+        });
+    </script>
+</body>
+</html>

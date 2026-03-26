@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>像素编码勇者 - 关卡列表</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .level-card {
+            transition: all 0.3s ease;
+        }
+        .level-card:hover {
+            transform: translateY(-5px);
+        }
+        .locked {
+            opacity: 0.6;
+            filter: grayscale(1);
+        }
+        .unlocked {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-blue-800 to-blue-900 min-h-screen">
+    <!-- 标题 -->
+    <div class="flex items-center justify-between p-6">
+        <h1 class="text-2xl font-bold text-white">关卡列表</h1>
+        <button id="backBtn" class="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+    </div>
+    
+    <!-- 关卡列表 -->
+    <div class="grid grid-cols-2 gap-4 p-4 max-w-md mx-auto">
+        <!-- 关卡1 -->
+        <div class="level-card unlocked bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center cursor-pointer">
+            <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mb-3">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pixel%20style%20dragon%20head%2C%208-bit%20graphics%2C%20vibrant%20colors&image_size=square" alt="魔龙头像" class="w-12 h-12 object-contain">
+            </div>
+            <h3 class="text-white font-medium mb-1">关卡 1</h3>
+            <p class="text-white/70 text-xs text-center">基础语法</p>
+            <div class="mt-2 text-green-400 text-xs">
+                <i class="fa fa-unlock"></i> 已解锁
+            </div>
+        </div>
+        
+        <!-- 关卡2 -->
+        <div class="level-card unlocked bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center cursor-pointer">
+            <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-3">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pixel%20style%20dragon%20head%2C%208-bit%20graphics%2C%20vibrant%20colors&image_size=square" alt="魔龙头像" class="w-12 h-12 object-contain">
+            </div>
+            <h3 class="text-white font-medium mb-1">关卡 2</h3>
+            <p class="text-white/70 text-xs text-center">条件语句</p>
+            <div class="mt-2 text-green-400 text-xs">
+                <i class="fa fa-unlock"></i> 已解锁
+            </div>
+        </div>
+        
+        <!-- 关卡3 -->
+        <div class="level-card locked bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center cursor-not-allowed">
+            <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mb-3">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pixel%20style%20dragon%20head%2C%208-bit%20graphics%2C%20vibrant%20colors&image_size=square" alt="魔龙头像" class="w-12 h-12 object-contain">
+            </div>
+            <h3 class="text-white font-medium mb-1">关卡 3</h3>
+            <p class="text-white/70 text-xs text-center">循环结构</p>
+            <div class="mt-2 text-yellow-400 text-xs">
+                <i class="fa fa-lock"></i> 未解锁
+            </div>
+        </div>
+        
+        <!-- 关卡4 -->
+        <div class="level-card locked bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center cursor-not-allowed">
+            <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mb-3">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pixel%20style%20dragon%20head%2C%208-bit%20graphics%2C%20vibrant%20colors&image_size=square" alt="魔龙头像" class="w-12 h-12 object-contain">
+            </div>
+            <h3 class="text-white font-medium mb-1">关卡 4</h3>
+            <p class="text-white/70 text-xs text-center">函数定义</p>
+            <div class="mt-2 text-yellow-400 text-xs">
+                <i class="fa fa-lock"></i> 未解锁
+            </div>
+        </div>
+        
+        <!-- 关卡5 -->
+        <div class="level-card locked bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center cursor-not-allowed">
+            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-3">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pixel%20style%20dragon%20head%2C%208-bit%20graphics%2C%20vibrant%20colors&image_size=square" alt="魔龙头像" class="w-12 h-12 object-contain">
+            </div>
+            <h3 class="text-white font-medium mb-1">关卡 5</h3>
+            <p class="text-white/70 text-xs text-center">列表操作</p>
+            <div class="mt-2 text-yellow-400 text-xs">
+                <i class="fa fa-lock"></i> 未解锁
+            </div>
+        </div>
+        
+        <!-- 关卡6 -->
+        <div class="level-card locked bg-white/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center cursor-not-allowed">
+            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-3">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pixel%20style%20dragon%20head%2C%208-bit%20graphics%2C%20vibrant%20colors&image_size=square" alt="魔龙头像" class="w-12 h-12 object-contain">
+            </div>
+            <h3 class="text-white font-medium mb-1">关卡 6</h3>
+            <p class="text-white/70 text-xs text-center">综合挑战</p>
+            <div class="mt-2 text-yellow-400 text-xs">
+                <i class="fa fa-lock"></i> 未解锁
+            </div>
+        </div>
+    </div>
+    
+    <!-- 返回主城按钮 -->
+    <div class="mt-8 flex justify-center">
+        <button id="returnHomeBtn" class="bg-white/20 hover:bg-white/30 text-white font-medium py-3 px-8 rounded-full shadow-lg transition-all duration-300">
+            返回主城
+        </button>
+    </div>
+    
+    <script>
+        // 返回按钮
+        document.getElementById('backBtn').addEventListener('click', () => {
+            window.location.href = 'home.html';
+        });
+        
+        // 返回主城按钮
+        document.getElementById('returnHomeBtn').addEventListener('click', () => {
+            window.location.href = 'home.html';
+        });
+        
+        // 关卡点击事件
+        const levelCards = document.querySelectorAll('.level-card');
+        levelCards.forEach((card, index) => {
+            if (!card.classList.contains('locked')) {
+                card.addEventListener('click', () => {
+                    // 存储当前关卡信息
+                    localStorage.setItem('currentLevel', index + 1);
+                    // 跳转到战斗界面
+                    window.location.href = 'battle.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

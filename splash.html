@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>像素编码勇者 - 启动页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .loading-spinner {
+            animation: spin 2s linear infinite;
+        }
+        .btn-pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-purple-900 to-blue-900 min-h-screen flex flex-col items-center justify-center">
+    <!-- 封面图 -->
+    <div class="relative w-full max-w-xs mb-8">
+        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pixel%20style%20brave%20warrior%20fighting%20a%20dragon%20on%20a%20mountain%20top%2C%208-bit%20graphics%2C%20vibrant%20colors&image_size=square_hd" alt="像素勇者与魔龙" class="w-full h-auto rounded-lg shadow-2xl">
+    </div>
+    
+    <!-- 软件名称 -->
+    <h1 class="text-4xl font-bold text-white mb-12 text-center drop-shadow-lg">
+        像素编码勇者
+    </h1>
+    
+    <!-- 加载动画 -->
+    <div class="flex items-center justify-center mb-8">
+        <div class="loading-spinner w-12 h-12 border-4 border-t-4 border-white border-opacity-30 rounded-full"></div>
+        <span class="ml-4 text-white text-lg">加载中...</span>
+    </div>
+    
+    <!-- 进入游戏按钮 -->
+    <button id="enterBtn" class="btn-pulse bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+        进入游戏
+    </button>
+    
+    <script>
+        // 模拟加载过程
+        setTimeout(() => {
+            document.querySelector('.loading-spinner').style.display = 'none';
+            document.querySelector('.loading-spinner + span').textContent = '加载完成';
+            document.getElementById('enterBtn').classList.remove('btn-pulse');
+        }, 2000);
+        
+        // 点击进入游戏
+        document.getElementById('enterBtn').addEventListener('click', () => {
+            window.location.href = 'create-hero.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>像素编码勇者 - 设置</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: #4CAF50;
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        .volume-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #d3d3d3;
+            outline: none;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+        .volume-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- 顶部导航 -->
+    <div class="bg-gray-800 text-white p-4 flex items-center justify-between">
+        <h1 class="text-xl font-bold">设置</h1>
+        <button id="backBtn" class="bg-white/20 hover:bg-white/30 p-2 rounded-full">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+    </div>
+    
+    <!-- 设置选项 -->
+    <div class="bg-white rounded-t-lg mt-2">
+        <!-- 音量设置 -->
+        <div class="p-4 border-b border-gray-200">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-gray-700 font-medium">音量</span>
+                <span class="text-gray-500 text-sm" id="volumeValue">50%</span>
+            </div>
+            <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
+        </div>
+        
+        <!-- 护眼模式 -->
+        <div class="p-4 border-b border-gray-200">
+            <div class="flex justify-between items-center">
+                <span class="text-gray-700 font-medium">护眼模式</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="eyeModeToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+        
+        <!-- 关于 -->
+        <div class="p-4 border-b border-gray-200">
+            <div class="flex justify-between items-center">
+                <span class="text-gray-700 font-medium">关于</span>
+                <span class="text-gray-500 text-sm">版本 1.0.0</span>
+            </div>
+        </div>
+        
+        <!-- 退出登录 -->
+        <div class="p-4">
+            <button id="logoutBtn" class="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 rounded-lg shadow-lg transition-all duration-300">
+                退出登录
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // 返回按钮
+        document.getElementById('backBtn').addEventListener('click', () => {
+            window.history.back();
+        });
+        
+        // 音量调节
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeValue = document.getElementById('volumeValue');
+        
+        volumeSlider.addEventListener('input', () => {
+            volumeValue.textContent = volumeSlider.value + '%';
+            // 这里可以添加实际的音量调节逻辑
+        });
+        
+        // 护眼模式
+        const eyeModeToggle = document.getElementById('eyeModeToggle');
+        
+        eyeModeToggle.addEventListener('change', () => {
+            if (eyeModeToggle.checked) {
+                // 开启护眼模式
+                document.body.style.backgroundColor = '#f0f0e6';
+            } else {
+                // 关闭护眼模式
+                document.body.style.backgroundColor = '#f8f8f8';
+            }
+        });
+        
+        // 退出登录
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            if (confirm('确定要退出登录吗？')) {
+                // 清除本地存储
+                localStorage.removeItem('heroNickname');
+                localStorage.removeItem('heroType');
+                localStorage.removeItem('currentLevel');
+                localStorage.removeItem('completedLevel');
+                // 跳转到启动页
+                window.location.href = 'splash.html';
+            }
+        });
+    </script>
+</body>
+</html>

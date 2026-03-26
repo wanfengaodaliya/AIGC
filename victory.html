@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>像素编码勇者 - 通关结算</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: confetti 3s ease-in-out infinite;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-yellow-600 to-orange-600 min-h-screen flex flex-col items-center relative overflow-hidden">
+    <!-- 礼花动画 -->
+    <div id="confetti-container" class="fixed inset-0 pointer-events-none"></div>
+    
+    <!-- 胜利图标 -->
+    <div class="mt-16 mb-8">
+        <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-2xl bounce">
+            <i class="fa fa-trophy text-yellow-500 text-4xl"></i>
+        </div>
+    </div>
+    
+    <!-- 胜利提示 -->
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-white mb-4 drop-shadow-lg">恭喜通关！</h1>
+        <p class="text-xl text-white/80" id="levelComplete">关卡 1 已完成</p>
+    </div>
+    
+    <!-- 奖励信息 -->
+    <div class="bg-white/20 backdrop-blur-sm rounded-lg p-6 mb-12 shadow-lg">
+        <h3 class="text-white font-medium mb-3 text-center">获得奖励</h3>
+        <div class="flex justify-around items-center">
+            <div class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mb-2">
+                    <i class="fa fa-star text-white"></i>
+                </div>
+                <span class="text-white text-sm">经验值 +100</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mb-2">
+                    <i class="fa fa-diamond text-white"></i>
+                </div>
+                <span class="text-white text-sm">金币 +50</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mb-2">
+                    <i class="fa fa-book text-white"></i>
+                </div>
+                <span class="text-white text-sm">技能点 +1</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 按钮 -->
+    <div class="flex flex-col gap-4 w-4/5 max-w-xs">
+        <button id="nextLevelBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 pulse">
+            下一关
+        </button>
+        <button id="returnHomeBtn" class="bg-white/20 hover:bg-white/30 text-white font-medium py-3 px-8 rounded-full shadow-lg transition-all duration-300">
+            返回主城
+        </button>
+    </div>
+    
+    <script>
+        // 生成礼花
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                container.appendChild(confetti);
+            }
+        }
+        
+        // 加载关卡信息
+        const completedLevel = localStorage.getItem('completedLevel') || 1;
+        document.getElementById('levelComplete').textContent = `关卡 ${completedLevel} 已完成`;
+        
+        // 检查是否是最后一关
+        const nextLevelBtn = document.getElementById('nextLevelBtn');
+        if (parseInt(completedLevel) >= 6) {
+            nextLevelBtn.textContent = '重新挑战';
+        }
+        
+        // 下一关按钮
+        nextLevelBtn.addEventListener('click', () => {
+            if (parseInt(completedLevel) < 6) {
+                const nextLevel = parseInt(completedLevel) + 1;
+                localStorage.setItem('currentLevel', nextLevel);
+                window.location.href = 'battle.html';
+            } else {
+                // 重新挑战第一关
+                localStorage.setItem('currentLevel', 1);
+                window.location.href = 'battle.html';
+            }
+        });
+        
+        // 返回主城按钮
+        document.getElementById('returnHomeBtn').addEventListener('click', () => {
+            window.location.href = 'home.html';
+        });
+        
+        // 生成礼花
+        createConfetti();
+    </script>
+</body>
+</html>

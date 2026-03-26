@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>像素编码勇者 - 勇者营地</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .btn-pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-green-100 min-h-screen">
+    <!-- 背景图 -->
+    <div class="fixed inset-0 z-0">
+        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pixel%20style%20fantasy%20camp%20with%20tents%20and%20campfire%2C%208-bit%20graphics%2C%20vibrant%20colors&image_size=landscape_16_9" alt="像素营地背景" class="w-full h-full object-cover opacity-90">
+    </div>
+    
+    <!-- 内容 -->
+    <div class="relative z-10 min-h-screen flex flex-col items-center">
+        <!-- 标题 -->
+        <h1 class="text-3xl font-bold text-white mt-16 mb-4 text-center drop-shadow-lg">
+            勇者营地
+        </h1>
+        
+        <!-- 角色信息 -->
+        <div id="heroInfo" class="bg-white/80 backdrop-blur-sm rounded-lg p-4 mb-12 shadow-lg">
+            <p class="text-center text-gray-800 font-medium">勇者：<span id="heroName">冒险者</span></p>
+        </div>
+        
+        <!-- 核心按钮 -->
+        <div class="flex flex-col items-center gap-6 mb-16">
+            <button id="startBtn" class="btn-pulse bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-4 px-12 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105 text-xl">
+                开始闯关
+            </button>
+        </div>
+        
+        <!-- 底部导航 -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm py-4 flex justify-around items-center border-t border-gray-200">
+            <button id="aiBtn" class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white mb-1">
+                    <i class="fa fa-robot text-xl"></i>
+                </div>
+                <span class="text-xs text-gray-600">AI求助</span>
+            </button>
+            
+            <button id="homeBtn" class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white mb-1">
+                    <i class="fa fa-home text-xl"></i>
+                </div>
+                <span class="text-xs text-gray-600">营地</span>
+            </button>
+            
+            <button id="settingsBtn" class="flex flex-col items-center">
+                <div class="w-12 h-12 bg-gray-500 rounded-full flex items-center justify-center text-white mb-1">
+                    <i class="fa fa-cog text-xl"></i>
+                </div>
+                <span class="text-xs text-gray-600">设置</span>
+            </button>
+        </div>
+        
+        <!-- AI求助悬浮按钮 -->
+        <div class="fixed right-6 top-1/2 transform -translate-y-1/2 z-20">
+            <button id="floatingAiBtn" class="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-lg float-animation">
+                <i class="fa fa-robot text-2xl"></i>
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // 加载角色信息
+        const heroName = localStorage.getItem('heroNickname') || '冒险者';
+        document.getElementById('heroName').textContent = heroName;
+        
+        // 开始闯关
+        document.getElementById('startBtn').addEventListener('click', () => {
+            window.location.href = 'levels.html';
+        });
+        
+        // AI求助
+        document.getElementById('aiBtn').addEventListener('click', () => {
+            window.location.href = 'ai-chat.html';
+        });
+        
+        document.getElementById('floatingAiBtn').addEventListener('click', () => {
+            window.location.href = 'ai-chat.html';
+        });
+        
+        // 设置
+        document.getElementById('settingsBtn').addEventListener('click', () => {
+            window.location.href = 'settings.html';
+        });
+        
+        // 营地按钮（当前页面）
+        document.getElementById('homeBtn').addEventListener('click', () => {
+            // 已经在营地页面，无需跳转
+        });
+    </script>
+</body>
+</html>
