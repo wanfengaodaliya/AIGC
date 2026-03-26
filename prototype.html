@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>像素编码勇者 - 原型演示</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        .phone-frame {
+            width: 393px;
+            height: 852px;
+            border-radius: 48px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+            position: relative;
+            margin: 0 auto;
+            background: #000;
+        }
+        .status-bar {
+            height: 44px;
+            background: #000;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            font-size: 14px;
+        }
+        .app-container {
+            height: calc(100% - 44px);
+            background: #f8f8f8;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .demo-section {
+            margin: 40px 0;
+        }
+        .demo-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">像素编码勇者 - 高保真原型</h1>
+        
+        <!-- 启动页 -->
+        <div class="demo-section">
+            <div class="demo-title">1. 启动页</div>
+            <div class="phone-frame">
+                <div class="status-bar">
+                    <div>9:41</div>
+                    <div><i class="fa fa-signal"></i> <i class="fa fa-wifi"></i> <i class="fa fa-battery-full"></i></div>
+                </div>
+                <div class="app-container">
+                    <iframe src="splash.html"></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 勇者创建页 -->
+        <div class="demo-section">
+            <div class="demo-title">2. 勇者创建页</div>
+            <div class="phone-frame">
+                <div class="status-bar">
+                    <div>9:41</div>
+                    <div><i class="fa fa-signal"></i> <i class="fa fa-wifi"></i> <i class="fa fa-battery-full"></i></div>
+                </div>
+                <div class="app-container">
+                    <iframe src="create-hero.html"></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 勇者营地（主城） -->
+        <div class="demo-section">
+            <div class="demo-title">3. 勇者营地（主城）</div>
+            <div class="phone-frame">
+                <div class="status-bar">
+                    <div>9:41</div>
+                    <div><i class="fa fa-signal"></i> <i class="fa fa-wifi"></i> <i class="fa fa-battery-full"></i></div>
+                </div>
+                <div class="app-container">
+                    <iframe src="home.html"></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 关卡列表页 -->
+        <div class="demo-section">
+            <div class="demo-title">4. 关卡列表页</div>
+            <div class="phone-frame">
+                <div class="status-bar">
+                    <div>9:41</div>
+                    <div><i class="fa fa-signal"></i> <i class="fa fa-wifi"></i> <i class="fa fa-battery-full"></i></div>
+                </div>
+                <div class="app-container">
+                    <iframe src="levels.html"></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 魔龙战斗主界面 -->
+        <div class="demo-section">
+            <div class="demo-title">5. 魔龙战斗主界面</div>
+            <div class="phone-frame">
+                <div class="status-bar">
+                    <div>9:41</div>
+                    <div><i class="fa fa-signal"></i> <i class="fa fa-wifi"></i> <i class="fa fa-battery-full"></i></div>
+                </div>
+                <div class="app-container">
+                    <iframe src="battle.html"></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 关卡通关结算页 -->
+        <div class="demo-section">
+            <div class="demo-title">6. 关卡通关结算页</div>
+            <div class="phone-frame">
+                <div class="status-bar">
+                    <div>9:41</div>
+                    <div><i class="fa fa-signal"></i> <i class="fa fa-wifi"></i> <i class="fa fa-battery-full"></i></div>
+                </div>
+                <div class="app-container">
+                    <iframe src="victory.html"></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI对话界面 -->
+        <div class="demo-section">
+            <div class="demo-title">7. AI对话界面</div>
+            <div class="phone-frame">
+                <div class="status-bar">
+                    <div>9:41</div>
+                    <div><i class="fa fa-signal"></i> <i class="fa fa-wifi"></i> <i class="fa fa-battery-full"></i></div>
+                </div>
+                <div class="app-container">
+                    <iframe src="ai-chat.html"></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 设置页 -->
+        <div class="demo-section">
+            <div class="demo-title">8. 设置页</div>
+            <div class="phone-frame">
+                <div class="status-bar">
+                    <div>9:41</div>
+                    <div><i class="fa fa-signal"></i> <i class="fa fa-wifi"></i> <i class="fa fa-battery-full"></i></div>
+                </div>
+                <div class="app-container">
+                    <iframe src="settings.html"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
